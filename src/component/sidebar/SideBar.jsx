@@ -1,17 +1,16 @@
 import { useState } from "react";
+import React from "react";
 import { FaHome, FaUserShield, FaUsers, FaBullhorn, FaTag, FaCog } from "react-icons/fa";
 
 const SideBar = () => {
-    const [openCategory, setOpenCategory] = useState(null); // State to track open category
-    const [selectedSubItem, setSelectedSubItem] = useState(null); // State to track selected sub-item
+    const [openCategory, setOpenCategory] = useState(null); 
+    const [selectedSubItem, setSelectedSubItem] = useState(null);
 
     const toggleCategory = (category) => {
-        // Toggle the clicked category, close others
         setOpenCategory((prevCategory) => (prevCategory === category ? null : category));
     };
 
     const handleSubItemClick = (subItem) => {
-        // Set the clicked subcategory as selected
         setSelectedSubItem(subItem);
     };
 
@@ -23,7 +22,6 @@ const SideBar = () => {
             <h1 className="text-3xl font-bold mb-6 text-orange-500">coimbatore<span className="text-white">.ai</span></h1>
 
             <ul className="space-y-3 text-white flex flex-col">
-                {/* Business */}
                 <li>
                     <button
                         className="flex items-center space-x-2 w-full "
@@ -98,8 +96,6 @@ const SideBar = () => {
                         </ul>
                     )}
                 </li>
-
-                {/* Customers */}
                 <li className="flex flex-col">
                     <button
                         className="flex items-center space-x-2 w-full"
@@ -133,8 +129,6 @@ const SideBar = () => {
                         </ul>
                     )}
                 </li>
-
-                {/* Ads Manager */}
                 <li className="flex flex-col">
                     <button
                         className={`flex items-center space-x-2 w-full ${
@@ -170,8 +164,6 @@ const SideBar = () => {
                         </ul>
                     )}
                 </li>
-
-                {/* Badge Manager */}
                 <li className="flex flex-col">
                     <button
                         className={`flex items-center space-x-2 w-full ${

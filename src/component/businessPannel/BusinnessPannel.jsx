@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import BussinessModal from '../modal/BussinessModal';
 
 const BusinessPannel = () => {
+
+    const [openModal, setOpenModal] = useState(false);
+
     const data = [
         {
             no: 1,
@@ -56,10 +60,15 @@ const BusinessPannel = () => {
         },
     ];
 
+    const toggleModal = () => {
+        setOpenModal((prev) => !prev);
+    };
+
     return (
         <section className="w-[90%] p-5 h-full">
             <div className="w-full flex justify-end mb-3">
-                <button className="bg-black rounded-md text-white p-2">Add Business</button>
+                <button className="bg-black rounded-md text-white p-2" onClick={toggleModal}>Add Business</button>
+                <BussinessModal open={openModal} onClose={toggleModal} />
             </div>
             <div>
                 <div className=" w-full ">

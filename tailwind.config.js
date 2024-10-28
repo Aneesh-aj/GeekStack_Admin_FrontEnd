@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+
 export default {
   content: [
     "./index.html",
@@ -12,6 +14,6 @@ export default {
       montserrat: ['Montserrat', 'sans-serif'],
     },
   },
-  plugins: [],
+ 
 }
 
