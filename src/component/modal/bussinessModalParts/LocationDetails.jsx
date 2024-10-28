@@ -3,30 +3,29 @@ import React from "react"
 import { Switch } from "@mui/material"
 import { useState } from "react"
 import Map from "../../businessPannel/Map"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addDetails } from "../../../redux/slice/businnessModalSlice"
 
 const LocationDetails = () => {
     const modalData = useSelector((state) => state.sectionStorage.businessData)
-    const [location, setLoaction] = useState(null)
-    const [whatsAppAvalible,setWhatappAvalible]=useState(false)
+    const dispatch = useDispatch()
 
     const api = import.meta.env.VITE_GOOLE_API
 
     async function searchLocation(searchText) {
         try {
-            const response = await axios.get(`/api/maps/place/details/output`, {
+            const response = await axios.get(`/api/maps/place/textsearch/json`, {
                 params: {
-                    query: searchText,
-                    key: api
+                    query: `restaurants in ${searchText}`,
+                    key: api, 
                 },
             });
-            console.log(" ...... ", response.data);
+            console.log("Search Results:", response.data);
         } catch (error) {
-            console.log(error)
             console.error("Error fetching location details:", error);
         }
     }
+    
 
 
 
@@ -46,8 +45,8 @@ const LocationDetails = () => {
             <span className="py-1 flex flex-col gap-2">
                 <label htmlFor="">Phone Number</label>
                 <span className="flex gap-3">
-                    <input type="text" className="border w-[4rem] h-[2rem] rounded-md border-gray-400 bg-gray-100 text-center" placeholder="+91" />
-                    <input type="text" className="border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" />
+                    <input type="text" className="border w-[4rem] h-[2rem] rounded-md border-gray-400 bg-gray-100 text-center" placeholder="+91" disabled />
+                    <input type="text" className="border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={()=>dispatch(addDetails({phoneNumber:e.target.value}))} />
                 </span>
             </span>
             <span>

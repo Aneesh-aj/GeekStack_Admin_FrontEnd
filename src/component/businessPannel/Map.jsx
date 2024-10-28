@@ -11,8 +11,8 @@ const containerStyle = {
 const api =import.meta.env.VITE_GOOLE_API
 
 const initialCenter = {
-  lat: 37.7749,  // Default latitude
-  lng: -122.4194,  // Default longitude
+  lat: 37.7749, 
+  lng: -122.4194,
 };
 
 const Map = () => {
