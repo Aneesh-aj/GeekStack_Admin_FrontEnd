@@ -4,15 +4,19 @@ import AddBussinessSection from "./bussinessModalParts/AddBussinessSection";
 import LocationDetails from "./bussinessModalParts/LocationDetails";
 import ContactDetails from "./bussinessModalParts/ContactDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { removeDetails } from "../../redux/slice/businnessModalSlice";
+import { addDetails, removeDetails } from "../../redux/slice/businnessModalSlice";
 
 const BusinessModal = ({ open, onClose }) => {
-    const modalData = useSelector((state) => state.sectionStorage.businessData);
+    const modalData = useSelector((state) => state.businessModal.businessData);
     const dispatch = useDispatch();
     const [step, setStep] = useState(1);
 
     useEffect(() => {
-        if (open) dispatch(removeDetails());
+        if (open) {
+            dispatch(removeDetails());
+            dispatch(addDetails({ url: '' }));
+            setStep(1);
+        }
     }, [open, dispatch]);
 
     if (!open) return null;
@@ -33,10 +37,10 @@ const BusinessModal = ({ open, onClose }) => {
                     modalData.latitude &&
                     modalData.longitude &&
                     modalData.whatsappAvailable &&
-                    modalData.websiteLink 
-                )
+                    modalData.websiteLink
+                );
             case 3:
-                return modalData.contactDetails; 
+                return modalData.contactDetails;
             default:
                 return false;
         }
@@ -57,7 +61,7 @@ const BusinessModal = ({ open, onClose }) => {
                     <h2 className="text-2xl font-semibold mb-4">Add New Business</h2>
                     <button
                         className="bg-red-500 text-white rounded-md p-2"
-                        onClick={onClose}
+                        onClick={onClose} 
                     >
                         Close
                     </button>
@@ -68,29 +72,17 @@ const BusinessModal = ({ open, onClose }) => {
                     {step === 2 && <LocationDetails />}
                     {step === 3 && <ContactDetails />}
                     <div className="w-full flex justify-between mt-4 mb-[5rem]">
-                    {step > 1 && (
-                        <button className="p-2 bg-gray-300 rounded" onClick={handlePrev}>
-                            Prev
-                        </button>
-                    )}
-                    {isCurrentStepComplete() && step < 3 && (
-                        <button className="p-2 bg-blue-500 text-white rounded" onClick={handleNext}>
-                            Next
-                        </button>
-                    )}
-                </div>
-                </div>
-                <div className="w-full flex justify-between mt-4 mb-[5rem]">
-                    {step > 1 && (
-                        <button className="p-2 bg-gray-300 rounded" onClick={handlePrev}>
-                            Prev
-                        </button>
-                    )}
-                    {isCurrentStepComplete() && step < 3 && (
-                        <button className="p-2 bg-blue-500 text-white rounded" onClick={handleNext}>
-                            Next
-                        </button>
-                    )}
+                        {step > 1 && (
+                            <button className="p-2 bg-gray-300 rounded" onClick={handlePrev}>
+                                Prev
+                            </button>
+                        )}
+                        {isCurrentStepComplete() && step < 3 && (
+                            <button className="p-2 bg-blue-500 text-white rounded" onClick={handleNext}>
+                                Next
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addDetails } from "../../../redux/slice/businnessModalSlice"
 
 const LocationDetails = () => {
-    const modalData = useSelector((state) => state.sectionStorage.businessData)
+    const modalData = useSelector((state) => state.businessModal.businessData)
     const dispatch = useDispatch()
 
     const api = import.meta.env.VITE_GOOLE_API
@@ -45,8 +45,8 @@ const LocationDetails = () => {
             <span className="py-1 flex flex-col gap-2">
                 <label htmlFor="">Phone Number</label>
                 <span className="flex gap-3">
-                    <input type="text" className="border w-[4rem] h-[2rem] rounded-md border-gray-400 bg-gray-100 text-center" placeholder="+91"  />
-                    <input type="text" className="border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={()=>dispatch(addDetails({phoneNumber:e.target.value}))} />
+                    <input disabled type="text" className="border w-[4rem] h-[2rem] rounded-md border-gray-400 bg-gray-100 text-center" placeholder="+91"  />
+                    <input type="number" className="border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={(e)=>dispatch(addDetails({phoneNumber:e.target.value}))} />
                 </span>
             </span>
             <span>
