@@ -26,9 +26,9 @@ const AddBusinessSection = () => {
     const [secondBadgeDropdown, setSecondBadgeDropdown] = useState(false)
 
 
-    dispatch(addDetails({logo:logos[0],badge1:logos[0],badge2:logos[0]}))
-
+    
     useEffect(() => {
+        dispatch(addDetails({logo:logos[0],badge1:logos[0],badge2:logos[0]}))
 
         if (modalData.businessCategory && modalData.businessName && modalData.businessSubCategory) {
             setCustomUrl(`/${modalData.businessName}`)

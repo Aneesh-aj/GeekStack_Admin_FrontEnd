@@ -45,7 +45,7 @@ const LocationDetails = () => {
             <span className="py-1 flex flex-col gap-2">
                 <label htmlFor="">Phone Number</label>
                 <span className="flex gap-3">
-                    <input type="text" className="border w-[4rem] h-[2rem] rounded-md border-gray-400 bg-gray-100 text-center" placeholder="+91" disabled />
+                    <input type="text" className="border w-[4rem] h-[2rem] rounded-md border-gray-400 bg-gray-100 text-center" placeholder="+91"  />
                     <input type="text" className="border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={()=>dispatch(addDetails({phoneNumber:e.target.value}))} />
                 </span>
             </span>

@@ -46,7 +46,6 @@ const ContactDetails = () => {
              <div className="w-full flex justify-center">
                  <button className="p-2 w-[90%] rounded-lg bg-yellow-500">Create Business</button>
              </div>
-            
         </>
     )
 }
