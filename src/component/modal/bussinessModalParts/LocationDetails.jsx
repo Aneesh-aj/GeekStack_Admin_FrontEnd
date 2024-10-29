@@ -2,7 +2,7 @@ import axios from "axios"
 import React from "react"
 import { Switch } from "@mui/material"
 import { useState } from "react"
-import Map from "../../businessPannel/Map"
+import Map from "../../map/Map"
 import { useDispatch, useSelector } from "react-redux"
 import { addDetails } from "../../../redux/slice/businnessModalSlice"
 
@@ -46,7 +46,7 @@ const LocationDetails = () => {
                 <label htmlFor="">Phone Number</label>
                 <span className="flex gap-3">
                     <input disabled type="text" className="border w-[4rem] h-[2rem] rounded-md border-gray-400 bg-gray-100 text-center" placeholder="+91"  />
-                    <input type="number" className="border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={(e)=>dispatch(addDetails({phoneNumber:e.target.value}))} />
+                    <input type="number" placeholder="Phone Number" className="border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={(e)=>dispatch(addDetails({phoneNumber:e.target.value}))} />
                 </span>
             </span>
             <span>
@@ -55,7 +55,7 @@ const LocationDetails = () => {
             </span>
             <span className="py-1">
                 <label htmlFor="" className="text-lg">WebSite</label>
-                <input type="text" className="w-full border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={(e)=>dispatch(addDetails({websiteLink:e.target.value}))} />
+                <input type="text" placeholder="Website Link" className="w-full border h-[2rem] rounded-md border-gray-400 bg-gray-100 ps-4" onChange={(e)=>dispatch(addDetails({websiteLink:e.target.value}))} />
             </span>
         </>
     )

@@ -3,7 +3,7 @@ import React from "react";
 import { FaHome, FaUserShield, FaUsers, FaBullhorn, FaTag, FaCog } from "react-icons/fa";
 
 const SideBar = () => {
-    const [openCategory, setOpenCategory] = useState(null); 
+    const [openCategory, setOpenCategory] = useState(null);
     const [selectedSubItem, setSelectedSubItem] = useState(null);
 
     const toggleCategory = (category) => {
@@ -42,9 +42,8 @@ const SideBar = () => {
                         <ul className="ms-6 border-l-2 p-1 mt-1 flex flex-col gap-1">
                             <li>
                                 <button
-                                    className={`w-[90%] p-1 rounded-md ${
-                                        isSubItemSelected("Add Category") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-1 rounded-md ${isSubItemSelected("Add Category") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Add Category")}
                                 >
                                     Add Category
@@ -52,9 +51,8 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <button
-                                    className={`w-[90%] p-1 rounded-md ${
-                                        isSubItemSelected("Manage Category") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-1 rounded-md ${isSubItemSelected("Manage Category") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Manage Category")}
                                 >
                                     Manage Category
@@ -75,9 +73,8 @@ const SideBar = () => {
                         <ul className="ms-6 border-l-2 p-1 mt-1 flex flex-col gap-1">
                             <li>
                                 <button
-                                    className={`w-[90%] p-1 rounded-md ${
-                                        isSubItemSelected("Assign Role") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-1 rounded-md ${isSubItemSelected("Assign Role") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Assign Role")}
                                 >
                                     Assign Role
@@ -85,9 +82,8 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <button
-                                    className={`w-[90%] p-1 rounded-md ${
-                                        isSubItemSelected("Manage Role") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-1 rounded-md ${isSubItemSelected("Manage Role") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Manage Role")}
                                 >
                                     Manage Role
@@ -108,9 +104,8 @@ const SideBar = () => {
                         <ul className="ms-6 border-l-2 p-1  mt-1 flex flex-col gap-1">
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Manage Customers") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Manage Customers") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Manage Customers")}
                                 >
                                     Manage Customers
@@ -118,9 +113,8 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Customer History") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Customer History") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Customer History")}
                                 >
                                     Customer History
@@ -131,9 +125,8 @@ const SideBar = () => {
                 </li>
                 <li className="flex flex-col">
                     <button
-                        className={`flex items-center space-x-2 w-full ${
-                            isCategoryOpen("Ads Manager") ? "bg-gray-600" : ""
-                        }`}
+                        className={`flex items-center space-x-2 w-full ${isCategoryOpen("Ads Manager") ? "bg-gray-600" : ""
+                            }`}
                         onClick={() => toggleCategory("Ads Manager")}
                     >
                         <FaBullhorn />
@@ -143,9 +136,8 @@ const SideBar = () => {
                         <ul className="ms-6 border-l-2 p-1 mt-1 flex flex-col gap-1">
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Manage Ads") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Manage Ads") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Manage Ads")}
                                 >
                                     Manage Ads
@@ -153,9 +145,8 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Ad Performance") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Ad Performance") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Ad Performance")}
                                 >
                                     Ad Performance
@@ -166,9 +157,8 @@ const SideBar = () => {
                 </li>
                 <li className="flex flex-col">
                     <button
-                        className={`flex items-center space-x-2 w-full ${
-                            isCategoryOpen("Badge Manager") ? "bg-gray-600" : ""
-                        }`}
+                        className={`flex items-center space-x-2 w-full ${isCategoryOpen("Badge Manager") ? "bg-gray-600" : ""
+                            }`}
                         onClick={() => toggleCategory("Badge Manager")}
                     >
                         <FaTag />
@@ -178,9 +168,8 @@ const SideBar = () => {
                         <ul className="ms-6 border-l-2 p-1 mt-1 flex flex-col gap-1">
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Assign Badges") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Assign Badges") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Assign Badges")}
                                 >
                                     Assign Badges
@@ -188,9 +177,8 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Manage Badges") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Manage Badges") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Manage Badges")}
                                 >
                                     Manage Badges
@@ -203,9 +191,8 @@ const SideBar = () => {
                 {/* Settings */}
                 <li className="flex flex-col">
                     <button
-                        className={`flex items-center space-x-2 w-full ${
-                            isCategoryOpen("Settings") ? "bg-gray-600" : ""
-                        }`}
+                        className={`flex items-center space-x-2 w-full ${isCategoryOpen("Settings") ? "bg-gray-600" : ""
+                            }`}
                         onClick={() => toggleCategory("Settings")}
                     >
                         <FaCog />
@@ -215,9 +202,8 @@ const SideBar = () => {
                         <ul className="ms-6 border-l-2 p-1 mt-1 flex flex-col gap-1">
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Account Settings") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Account Settings") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Account Settings")}
                                 >
                                     Account Settings
@@ -225,9 +211,8 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <button
-                                    className={`w-[90%] p-2 rounded-md ${
-                                        isSubItemSelected("Privacy Settings") ? "bg-gray-600" : ""
-                                    }`}
+                                    className={`w-[90%] p-2 rounded-md ${isSubItemSelected("Privacy Settings") ? "bg-gray-600" : ""
+                                        }`}
                                     onClick={() => handleSubItemClick("Privacy Settings")}
                                 >
                                     Privacy Settings

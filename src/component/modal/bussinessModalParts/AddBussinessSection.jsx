@@ -197,6 +197,7 @@ const AddBusinessSection = () => {
                  <label className="text-gray-500"> URL : {`${url && customUrl ?url+customUrl:""}`}</label>
                 <input
                     type="text"
+                    placeholder="URL"
                     value={`${customUrl ? customUrl : ""}`}
                     className="w-full h-[2rem] rounded-md border border-gray-400 bg-gray-100 ps-4"
                     onChange={(e)=>changeUrl(e)}
