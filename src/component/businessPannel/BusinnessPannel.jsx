@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import BussinessModal from '../modal/BussinessModal';
+import BussinessModal from '../modal/businessModal/BusinessModal';
+import TableSection from '../table/TableSection';
 
 const BusinessPannel = () => {
 
@@ -64,13 +65,39 @@ const BusinessPannel = () => {
         setOpenModal((prev) => !prev);
     };
 
+
+
+    const headings = [
+        "No",
+        "Name",
+        "Number",
+        "Email",
+        "Started Date",
+        "Course",
+        "working status",
+        "Lead From",
+        "Demo Class",
+        "Lead score",
+        "Status",
+        "Action",
+      ];
+      const props = {
+        headings,
+        
+        buttonValue: "Add new Lead",
+        data,
+       
+      };
+
     return (
-        <section className="w-[90%] p-5 h-full">
+        <section className="w-[100%] p-3 h-auto  mt-10 rounded-md">
             <div className="w-full flex justify-end mb-3">
                 <button className="bg-black rounded-md text-white p-2" onClick={toggleModal}>Add Business</button>
                 <BussinessModal open={openModal} onClose={toggleModal} />
             </div>
-            <div>
+              <TableSection data={props}/>
+
+            {/* <div>
                 <div className=" w-full ">
                     <table className="table-auto w-full   rounded">
                         <thead>
@@ -118,7 +145,7 @@ const BusinessPannel = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> */}
         </section>
     );
 };

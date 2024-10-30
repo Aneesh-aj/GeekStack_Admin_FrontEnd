@@ -1,21 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import React from 'react'
-import SideBar from './component/sidebar/SideBar'
-import BusinnessPannel from './component/businessPannel/BusinnessPannel'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AdminLogin from './page/login/AdminLogin';
+import React from 'react';
+import ProtectedRoutes from './routes/ProtectedRoutes';
+import DashBoard from './page/login/DashBoard';
 
 function App() {
-
   return (
-    <>
-      <div className="flex w-full h-full">
-        <SideBar />
-        <BusinnessPannel />
-      </div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<AdminLogin />} />
+        <Route path="/" element={<AdminLogin />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/admin/business" element={<DashBoard selectedOptionProp="Business" />} />
+          <Route path="/admin/categories" element={<DashBoard selectedOptionProp="Categories" />} />
+          <Route path="/admin/ads-manager" element={<DashBoard selectedOptionProp="Ads Manager" />} />
+          <Route path="/admin/badge-manager" element={<DashBoard selectedOptionProp="Badge Manager" />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

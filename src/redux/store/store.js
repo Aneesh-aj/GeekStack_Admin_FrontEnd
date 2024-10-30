@@ -3,7 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { Provider } from 'react-redux';
 
-import businessModalReducer from '../slice/businnessModalSlice'; 
+import businessModalReducer from '../slice/businessModalSlice'; 
 import adminReducer from "../slice/adminSlice";
 
 const sectionPersistConfig = {
@@ -11,10 +11,9 @@ const sectionPersistConfig = {
   storage,
 };
 
-// Combine reducers
 const rootReducer = combineReducers({
   businessModal: businessModalReducer,
-  admin: adminReducer,
+  adminData: adminReducer,
 });
 
 const persistedReducer = persistReducer(sectionPersistConfig, rootReducer);

@@ -9,6 +9,9 @@ export default {
   theme: {
     extend: {},
   },
+  plugins: [
+    require('tailwind-scrollbar-hide')
+],
   extend: {
     fontFamily: {
       montserrat: ['Montserrat', 'sans-serif'],

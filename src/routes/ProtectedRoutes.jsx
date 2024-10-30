@@ -2,11 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
 
-const PublicRoutes = () => {
+const ProtectedRoutes = () => {
     const admin = useSelector((state) => state.adminData.admin);
-    console.log("public admin ______", admin);
     
-    return admin ? <Navigate to="/admin/home" /> : <Outlet />;
+    return admin ? <Outlet /> : <Navigate to="/login" />;
 };
 
-export default PublicRoutes;
+export default ProtectedRoutes;

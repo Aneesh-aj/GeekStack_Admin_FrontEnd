@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useDispatch } from 'react-redux';
-import { addDetails } from '../../redux/slice/businnessModalSlice';
+import { addDetails } from '../../redux/slice/businessModalSlice';
 
 const containerStyle = {
   width: '100%',
@@ -15,7 +15,7 @@ const initialCenter = {
   lng: -122.4194,
 };
 
-const Map = () => {
+const MapIntregation = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const dispatch = useDispatch()
 
@@ -46,4 +46,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default MapIntregation;

@@ -2,9 +2,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    id:"",
+    token:"",
     email:'',
-    password:'',
-    role:""
+    role:{value:null,admin:''}
 }
 
 
@@ -16,10 +17,11 @@ const adminSlice = createSlice({
              state.admin = {...state.admin,...action.payload}
         },
         removeAdmin:(state,action)=>{
-            state.admin = {
+            state.adminData.admin = {
+                id:"",
+                token:'',
                 email:"",
-                password:"",
-                role:""
+                role:{value:null,admin:''}
             }
         }
     }

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select"; // Import react-select
-import { addDetails } from "../../../redux/slice/businnessModalSlice";
+import Select from "react-select";
 import CustomOption from "../customSections/CustomOption";
 import CustomMultiValue from "../customSections/CustomMultiValue";
-
-
+import { addDetails } from "../../../../redux/slice/businessModalSlice";
 
 const AddBusinessSection = () => {
     const modalData = useSelector((state) => state.businessModal.businessData);
-   const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const [customUrl, setCustomUrl] = useState();
     const [url, setUrl] = useState();
     const dispatch = useDispatch();
@@ -24,13 +22,12 @@ const AddBusinessSection = () => {
     const [businessCategory, setBusinessCategory] = useState();
     const [businessSubCategory, setBusinessSubCategory] = useState();
     const [selectedLogo, setSelectedLogo] = useState(logos[0]);
-    
     const [selectedBadges, setSelectedBadges] = useState([]); 
 
     useEffect(() => {
         dispatch(addDetails({ logo: logos[0], badge1: logos[0], badge2: logos[0] }));
 
-        if (modalData.businessCategory && modalData.businessName && modalData.businessSubCategory&&!customUrl) {
+        if (modalData.businessCategory && modalData.businessName && modalData.businessSubCategory && !customUrl) {
             setCustomUrl(`/${modalData.businessName}`);
             setUrl(`www.coimbatore.ai/${modalData.businessCategory}/${modalData.businessSubCategory}`);
             dispatch(addDetails({ url: url + customUrl }));
@@ -40,26 +37,28 @@ const AddBusinessSection = () => {
     const handleLogoChange = (logo) => {
         setSelectedLogo(logo);
         dispatch(addDetails({ logo: logo.src }));
-        setDropdownOpen(false)
+        setDropdownOpen(false);
     };
 
     const handleBadgeChange = (selectedOptions) => {
         const selected = selectedOptions || [];
+        console.log(" sls",selected)
         if (selected.length <= 2) {
             setSelectedBadges(selected);
-            console.log(selected)
             dispatch(addDetails({
-                badge1: selected[0]?.value || "",
-                badge2: selected[1]?.value || "",
+                badge: [...modalData.badge, ...selected.value]
             }));
+            
+            
+            console.log(" data modalD",modalData.badge)
         }
     };
 
-    const changeUrl=(e)=>{
-        const newURL = e.target.value
-        setCustomUrl(newURL)
-        dispatch(addDetails({url:url+customUrl}))
-    }
+    const changeUrl = (e) => {
+        const newURL = e.target.value;
+        setCustomUrl(newURL);
+        dispatch(addDetails({ url: url + customUrl }));
+    };
 
     const handleCategoryChange = (e) => {
         const selectedCategory = e.target.value;
@@ -93,25 +92,26 @@ const AddBusinessSection = () => {
     };
 
     return (
-        <div className="flex flex-col gap-3">
-            <span className="flex flex-col gap-1">
-                <label className="text-lg">Business Name</label>
+        <div className=" bg-white rounded-lg  p-2 space-y-5">
+            <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-1">Business Name</label>
                 <input
                     type="text"
                     value={modalData.businessName}
-                    placeholder="eg : Restaurant"
-                    className="w-full border h-[2rem] bg-gray-100 rounded-md border-gray-400 ps-4 text-gray-700"
+                    placeholder="e.g., Restaurant"
+                    className="w-full border h-10 bg-gray-100 rounded-md px-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onChange={(e) => {
                         dispatch(addDetails({ businessName: e.target.value }));
                         setBusinessName(e.target.value);
                     }}
                 />
-            </span>
-            <span className="flex flex-col gap-1">
-                <label className="text-lg">Business Category</label>
+            </div>
+
+            <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-1">Business Category</label>
                 <select
                     value={modalData.businessCategory || ""}
-                    className="w-full border h-[2rem] bg-gray-100 rounded-md border-gray-400 ps-4"
+                    className="w-full border h-10 bg-gray-100 rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onChange={handleCategoryChange}
                 >
                     {categories.map((category) => (
@@ -120,12 +120,13 @@ const AddBusinessSection = () => {
                         </option>
                     ))}
                 </select>
-            </span>
-            <span className="flex flex-col gap-1">
-                <label className="text-lg">Business Sub Category</label>
+            </div>
+
+            <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-1">Business Sub Category</label>
                 <select
                     value={modalData.businessSubCategory || ""}
-                    className="w-full border h-[2rem] bg-gray-100 rounded-md border-gray-400 ps-4"
+                    className="w-full border h-10 bg-gray-100 rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onChange={(e) => {
                         dispatch(addDetails({ businessSubCategory: e.target.value }));
                         setBusinessSubCategory(e.target.value);
@@ -138,34 +139,35 @@ const AddBusinessSection = () => {
                         </option>
                     ))}
                 </select>
-            </span>
-            <span className="flex flex-col gap-1">
-                <label className="text-lg">Logo</label>
-                <div className="relative w-[10rem]">
+            </div>
+
+            <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-1">Logo</label>
+                <div className="relative w-24">
                     <button
-                        className="w-[3rem] h-[2rem] border rounded-lg bg-gray-100 border-gray-400 flex items-center gap-2 ps-2"
+                        className="w-10 h-10 border rounded-lg bg-gray-100 border-gray-400 flex items-center justify-center"
                         onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
-                        <img src={`${modalData.logo ? modalData.logo : selectedLogo.src}`} alt={selectedLogo.label} className="w-6 h-6" />
+                        <img src={selectedLogo?.src} alt={selectedLogo.label} className="w-8 h-8" />
                     </button>
-
                     {dropdownOpen && (
-                        <div className="absolute top-full mt-1 w-[3rem] bg-white border border-gray-400 rounded-lg shadow-md z-10">
+                        <div className="absolute top-full mt-2 w-24 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                             {logos.map((logo) => (
                                 <div
                                     key={logo.value}
                                     onClick={() => handleLogoChange(logo)}
-                                    className="flex items-center gap-2 p-2 cursor-pointer hover:bg-gray-200"
+                                    className="p-2 cursor-pointer hover:bg-gray-200 flex items-center justify-center"
                                 >
-                                    <img src={logo.src} alt={logo.label} className="w-6 h-6" />
+                                    <img src={logo.src} alt={logo.label} className="w-8 h-8" />
                                 </div>
                             ))}
                         </div>
                     )}
                 </div>
-            </span>
-            <span className="flex flex-col gap-1">
-                <label className="text-lg">Select Badges</label>
+            </div>
+
+            <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-1">Select Badges</label>
                 <Select
                     options={logos.map((logo) => ({ value: logo.src, label: logo.label }))}
                     isMulti
@@ -173,11 +175,11 @@ const AddBusinessSection = () => {
                     value={selectedBadges.map((badge) => ({ value: badge.value, label: badge.label }))}
                     isClearable={false}
                     closeMenuOnSelect={false}
-                    components={{ Option: CustomOption, MultiValue: CustomMultiValue }} // Use custom components
+                    components={{ Option: CustomOption, MultiValue: CustomMultiValue }}
                     styles={{
                         multiValue: (base) => ({
                             ...base,
-                            backgroundColor: "#e5e7eb", 
+                            backgroundColor: "#e5e7eb",
                         }),
                         multiValueLabel: (base) => ({
                             ...base,
@@ -190,20 +192,20 @@ const AddBusinessSection = () => {
                         }),
                     }}
                 />
-                <p className="text-sm text-gray-500">Select up to 2 badges</p>
-            </span>
-            <span className="flex flex-col gap-1">
-                <label>SEO Friendly URL</label>
-                 <label className="text-gray-500"> URL : {`${url && customUrl ?url+customUrl:""}`}</label>
+                <p className="text-sm text-gray-500 mt-1">Select up to 2 badges</p>
+            </div>
+
+            <div>
+                <label className="block text-gray-700 text-sm font-semibold mb-1">SEO Friendly URL</label>
+                <div className="text-gray-500 text-sm mb-1">URL: {`${url && customUrl ? url + customUrl : ""}`}</div>
                 <input
                     type="text"
-                    placeholder="URL"
-                    value={`${customUrl ? customUrl : ""}`}
-                    className="w-full h-[2rem] rounded-md border border-gray-400 bg-gray-100 ps-4"
-                    onChange={(e)=>changeUrl(e)}
+                    placeholder="Custom URL"
+                    value={customUrl || ""}
+                    className="w-full h-10 border rounded-md bg-gray-100 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => changeUrl(e)}
                 />
-            </span>
-            <p className="text-gray-500"> www.coimbatore.ai/category/sub-cat/haribavanam-peelamedu-</p>
+            </div>
         </div>
     );
 };
