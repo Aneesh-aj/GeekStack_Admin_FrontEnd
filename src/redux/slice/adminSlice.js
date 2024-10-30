@@ -2,31 +2,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    id:"",
-    token:"",
-    email:'',
-    role:{value:null,admin:''}
+    admin :{
+        id: "",
+        accessToken: "",
+        refreshToken: "",
+        email: '',
+        role: { value: null, admin: '' }
+    }
 }
 
 
 const adminSlice = createSlice({
-    name:"admin",
+    name: "admin",
     initialState,
-    reducers:{
-        addAdmin:(state,action)=>{
-             state.admin = {...state.admin,...action.payload}
+    reducers: {
+        addAdmin: (state, action) => {
+            console.log(" the admin ",state.admin)
+            state.admin = { ...state.admin, ...action.payload };
         },
-        removeAdmin:(state,action)=>{
-            state.adminData.admin = {
-                id:"",
-                token:'',
-                email:"",
-                role:{value:null,admin:''}
-            }
+        removeAdmin: (state) => {
+            state.admin = {
+                id: "",
+                accessToken: "",
+                refreshToken: "",
+                email: "",
+                role: { value: null, admin: '' }
+            };
         }
     }
-})
+});
 
 
-export const {addAdmin,removeAdmin} = adminSlice.actions
+
+export const { addAdmin, removeAdmin } = adminSlice.actions
 export default adminSlice.reducer

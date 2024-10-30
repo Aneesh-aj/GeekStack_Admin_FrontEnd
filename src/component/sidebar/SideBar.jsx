@@ -3,9 +3,13 @@ import React from "react";
 import { menuItems } from "../static/sideBarData";
 import { useNavigate } from "react-router-dom";
 import { submitBusinessData } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { removeAdmin } from "../../redux/slice/adminSlice";
+import { removeDetails } from "../../redux/slice/businessModalSlice";
 
 const SideBar = ({ onSelectOption, selectedOption }) => {
     const [openCategory, setOpenCategory] = useState(null);
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const toggleCategory = (category) => {
@@ -17,10 +21,17 @@ const SideBar = ({ onSelectOption, selectedOption }) => {
         navigate(`/admin/${category.toLowerCase().replace(/ /g, "-")}`);
     };
 
+   function refreshing(){
+       dispatch(removeAdmin())
+       dispatch(removeDetails())
+   }
+
     return (
         <section className="w-[18%] h-[100vh] bg-black p-7">
             <h1 className="text-3xl font-bold mb-6 text-orange-500">
                 coimbatore<span className="text-white">.ai</span>
+                {/* <button onClick={submitBusinessData}>Click</button> */}
+                {/* <button onClick={refreshing}>redux not working</button> */}
             </h1>
 
             <ul className="space-y-3 text-white">

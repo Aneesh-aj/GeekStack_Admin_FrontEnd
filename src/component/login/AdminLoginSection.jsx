@@ -49,15 +49,16 @@ const AdminLoginSection = () => {
         setEmail("");
         setPassword("");
         setLoading(false);
-        console.log("1")
         const role = res?.role?.admin;
         console.log(" the role ",role)
+
         if (role === "superAdmin" ) {
           console.log('2')
           dispatch(
             addAdmin({
               id: res?.id,
-              token:res?.token,
+              accessToken:res?.accessToken,
+              refreshToken:res?.refreshToken,
               email: res?.email,
               role: res?.role,
             })
