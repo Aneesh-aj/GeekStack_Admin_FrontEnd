@@ -18,7 +18,7 @@ const BadgeModal = ({ open, onClose }) => {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ duration: 0.4 }}
-                        className="bg-white p-9 rounded-md shadow-md w-[35%]"
+                        className="bg-white p-9 rounded-md shadow-md w-[30%]"
                     >
                         <div className="w-full flex justify-between items-center">
                             <h2 className="text-2xl font-semibold mb-4">Add Badge</h2>

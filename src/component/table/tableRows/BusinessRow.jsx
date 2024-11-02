@@ -129,8 +129,7 @@ const BusinessRow=({data})=>{
                 onClick={() => handleDelete(data?._id)}
                 className="text-black w-6 h-6 dark:text-white cursor-pointer"
               /> */}
-              ddd
-              <div className="relative">
+              <div className="">
                 {/* <IoMdMore
                   onClick={() => {
                     setDropdown(!dropdown);
@@ -138,7 +137,6 @@ const BusinessRow=({data})=>{
                   }}
                   className="text-black w-6 h-6 dark:text-white cursor-pointer"
                 /> */}
-                dddss
                 {dropdown &&openDropdownIndex === index && (
                  <div
                  className={`absolute right-0 z-10 origin-top-right bg-white rounded-md text-gray-600 shadow-lg focus:outline-none border dark:text-slate-300 dark:bg-gray-800 dark:border-slate-300/20`}

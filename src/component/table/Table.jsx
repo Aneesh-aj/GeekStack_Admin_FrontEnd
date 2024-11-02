@@ -49,8 +49,6 @@ const Table = ({ data, headings }) => {
                       key: ind,
                       index: index ,
                       data: ele,
-                    //   refresh: refresh,
-                    //   setRefresh: setRefresh,
                       openDropdownIndex:openDropdownIndex,
                       setOpenDropdownIndex:setOpenDropdownIndex
                     })}

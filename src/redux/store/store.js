@@ -1,20 +1,13 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import { Provider } from 'react-redux';
-
-import businessModalReducer from '../slice/businessModalSlice'; 
-import adminReducer from "../slice/adminSlice";
+import rootReducer from '../slice/rootReducer';
 
 const sectionPersistConfig = {
   key: 'root',
   storage,
 };
-
-const rootReducer = combineReducers({
-  businessModal: businessModalReducer,
-  adminData: adminReducer,
-});
 
 const persistedReducer = persistReducer(sectionPersistConfig, rootReducer);
 

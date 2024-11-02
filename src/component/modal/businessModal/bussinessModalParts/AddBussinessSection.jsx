@@ -4,207 +4,192 @@ import Select from "react-select";
 import CustomOption from "../customSections/CustomOption";
 import CustomMultiValue from "../customSections/CustomMultiValue";
 import { addDetails } from "../../../../redux/slice/businessModalSlice";
+import { getAllBadges, getAllCategory } from "../../../../utils/api";
+import { uploadImages } from "../../../../firebase/upload";
 
 const AddBusinessSection = () => {
     const modalData = useSelector((state) => state.businessModal.businessData);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [customUrl, setCustomUrl] = useState();
-    const [url, setUrl] = useState();
+    const [businessName, setBusinessName] = useState("");
+    const [businessCategory, setBusinessCategory] = useState("");
+    const [businessSubCategory, setBusinessSubCategory] = useState("");
+    const [customUrl, setCustomUrl] = useState("");
+    const [categories, setCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
+    const [url, setUrl] = useState("");
     const dispatch = useDispatch();
-
-    const logos = [
-        { label: "Logo One", value: "logo1", src: "https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg" },
-        { label: "Logo Two", value: "logo2", src: "https://cdn.pixabay.com/photo/2016/12/27/13/10/logo-1933884_640.png" },
-        { label: "Logo Three", value: "logo3", src: "https://st2.depositphotos.com/5142301/7551/v/450/depositphotos_75512255-stock-illustration-abstract-sphere-logo.jpg" },
-    ];
-
-    const [businessName, setBusinessName] = useState();
-    const [businessCategory, setBusinessCategory] = useState();
-    const [businessSubCategory, setBusinessSubCategory] = useState();
-    const [selectedLogo, setSelectedLogo] = useState(logos[0]);
-    const [selectedBadges, setSelectedBadges] = useState([]); 
+    const [selectedLogo, setSelectedLogo] = useState(null);
+    const [badges,setBadges] = useState([])
+    const [selectedBadges, setSelectedBadges] = useState([]);
 
     useEffect(() => {
-        dispatch(addDetails({ logo: logos[0], badge1: logos[0], badge2: logos[0] }));
+        fetchData();
+    }, []);
 
-        if (modalData.businessCategory && modalData.businessName && modalData.businessSubCategory && !customUrl) {
-            setCustomUrl(`/${modalData.businessName}`);
-            setUrl(`www.coimbatore.ai/${modalData.businessCategory}/${modalData.businessSubCategory}`);
-            dispatch(addDetails({ url: url + customUrl }));
-        }
-    }, [businessName, businessCategory, businessSubCategory]);
-
-    const handleLogoChange = (logo) => {
-        setSelectedLogo(logo);
-        dispatch(addDetails({ logo: logo.src }));
-        setDropdownOpen(false);
-    };
+    useEffect(() => {
+        const constructedUrl = `www.coimbatore.ai/${businessCategory}/${businessSubCategory}/${customUrl || businessName}`;
+        setUrl(constructedUrl);
+        dispatch(addDetails({ url: constructedUrl }));
+    }, [businessCategory, businessSubCategory, customUrl, businessName]);
 
     const handleBadgeChange = (selectedOptions) => {
         const selected = selectedOptions || [];
-        console.log(" sls",selected)
         if (selected.length <= 2) {
             setSelectedBadges(selected);
-            dispatch(addDetails({
-                badge: [...modalData.badge, ...selected.value]
-            }));
-            
-            
-            console.log(" data modalD",modalData.badge)
+            dispatch(addDetails({ badge: selected }));
+        } else {
+            console.log("You can select only up to 2 badges.");
         }
     };
 
-    const changeUrl = (e) => {
-        const newURL = e.target.value;
-        setCustomUrl(newURL);
-        dispatch(addDetails({ url: url + customUrl }));
+    const changeBusinessName = (e) => {
+        const newBusinessName = e.target.value;
+        setBusinessName(newBusinessName);
+        dispatch(addDetails({ businessName: newBusinessName }));
+    };
+
+    const changeCustomUrl = (e) => {
+        const newCustomUrl = e.target.value;
+        setCustomUrl(newCustomUrl);
     };
 
     const handleCategoryChange = (e) => {
-        const selectedCategory = e.target.value;
-        dispatch(addDetails({ businessCategory: selectedCategory, businessSubCategory: "" }));
-        setBusinessCategory(selectedCategory);
+        const selectedCategoryId = e.target.value;
+        const selectedCategory = categories.find(category => category._id === selectedCategoryId);
+        if (selectedCategory) {
+            setBusinessCategory(selectedCategoryId);
+            setSubCategories(selectedCategory.subCategory);
+            setBusinessSubCategory("");
+            dispatch(addDetails({ businessCategory: selectedCategoryId, businessSubCategory: "" }));
+        }
     };
 
-    const categories = [
-        { label: "Select Category", value: "" },
-        { label: "Technology", value: "technology" },
-        { label: "Health", value: "health" },
-        { label: "Finance", value: "finance" },
-    ];
-
-    const subCategories = {
-        technology: [
-            { label: "Select Sub Category", value: "" },
-            { label: "Software", value: "software" },
-            { label: "Hardware", value: "hardware" },
-        ],
-        health: [
-            { label: "Select Sub Category", value: "" },
-            { label: "Wellness", value: "wellness" },
-            { label: "Medicine", value: "medicine" },
-        ],
-        finance: [
-            { label: "Select Sub Category", value: "" },
-            { label: "Banking", value: "banking" },
-            { label: "Investment", value: "investment" },
-        ],
+    const handleSubCategoryChange = (e) => {
+        const selectedSubCategory = e.target.value;
+        setBusinessSubCategory(selectedSubCategory);
+        dispatch(addDetails({ businessSubCategory: selectedSubCategory }));
     };
+
+    const handleLogoChange = async(e) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+             
+            if(file){
+               const image = await uploadImages(file)
+               setSelectedLogo(image)
+               dispatch(addDetails({logo:image}))
+            }
+
+        }
+    };
+
+    async function fetchData() {
+        try {
+            const categoryData = await getAllCategory();
+            const badgeData = await getAllBadges()
+            setCategories(categoryData.category);
+            console.log(" b ",badgeData.badge);
+            
+            setBadges(badgeData.badge)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
-        <div className=" bg-white rounded-lg  p-2 space-y-5">
-            <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1">Business Name</label>
+        <div className="bg-white rounded-lg p-5 space-y-3">
+            <div className="p-1">
+                <label className="text-sm font-semibold text-gray-800">Business Name</label>
                 <input
                     type="text"
-                    value={modalData.businessName}
-                    placeholder="e.g., Restaurant"
-                    className="w-full border h-10 bg-gray-100 rounded-md px-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={(e) => {
-                        dispatch(addDetails({ businessName: e.target.value }));
-                        setBusinessName(e.target.value);
-                    }}
+                    value={businessName}
+                    placeholder="Enter custom business name"
+                    className="mt-1 w-full border border-gray-300 h-10 bg-gray-100 rounded-md px-4 py-2 text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ease-in-out hover:border-indigo-400"
+                    onChange={changeBusinessName}
                 />
             </div>
 
-            <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1">Business Category</label>
+            <div className="p-1">
+                <label className="text-sm font-semibold text-gray-800">Business Category</label>
                 <select
-                    value={modalData.businessCategory || ""}
-                    className="w-full border h-10 bg-gray-100 rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={businessCategory || ""}
+                    className="mt-1 w-full border border-gray-300 h-10 bg-gray-100 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition duration-200 ease-in-out hover:border-indigo-400"
                     onChange={handleCategoryChange}
                 >
+                    <option value="">Select Category</option>
                     {categories.map((category) => (
-                        <option key={category.value} value={category.value}>
-                            {category.label}
+                        <option key={category._id} value={category._id}>
+                            {category.categoryName}
                         </option>
                     ))}
                 </select>
             </div>
 
-            <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1">Business Sub Category</label>
+            <div className="p-1">
+                <label className="text-sm font-semibold text-gray-800">Business Sub Category</label>
                 <select
-                    value={modalData.businessSubCategory || ""}
-                    className="w-full border h-10 bg-gray-100 rounded-md px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={(e) => {
-                        dispatch(addDetails({ businessSubCategory: e.target.value }));
-                        setBusinessSubCategory(e.target.value);
-                    }}
-                    disabled={!modalData.businessCategory}
+                    value={businessSubCategory || ""}
+                    className="mt-1 w-full border border-gray-300 h-10 bg-gray-100 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition duration-200 ease-in-out hover:border-indigo-400"
+                    onChange={handleSubCategoryChange}
+                    disabled={!businessCategory}
                 >
-                    {(subCategories[modalData.businessCategory] || []).map((subCategory) => (
-                        <option key={subCategory.value} value={subCategory.value}>
-                            {subCategory.label}
+                    <option value="">Select Sub Category</option>
+                    {subCategories.map((subCategory, index) => (
+                        <option key={index} value={subCategory}>
+                            {subCategory}
                         </option>
                     ))}
                 </select>
             </div>
 
-            <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1">Logo</label>
-                <div className="relative w-24">
-                    <button
-                        className="w-10 h-10 border rounded-lg bg-gray-100 border-gray-400 flex items-center justify-center"
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
-                    >
-                        <img src={selectedLogo?.src} alt={selectedLogo.label} className="w-8 h-8" />
-                    </button>
-                    {dropdownOpen && (
-                        <div className="absolute top-full mt-2 w-24 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                            {logos.map((logo) => (
-                                <div
-                                    key={logo.value}
-                                    onClick={() => handleLogoChange(logo)}
-                                    className="p-2 cursor-pointer hover:bg-gray-200 flex items-center justify-center"
-                                >
-                                    <img src={logo.src} alt={logo.label} className="w-8 h-8" />
-                                </div>
-                            ))}
-                        </div>
+            <div className="p-1">
+                <label className="text-sm font-semibold text-gray-800">Logo</label>
+                <div className="mt-1 flex items-center gap-4">
+                    <label className="relative cursor-pointer bg-indigo-600 text-white rounded-md px-4 py-2 font-semibold hover:bg-indigo-700 transition">
+                        <input
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            onChange={handleLogoChange}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        />
+                        Upload Logo
+                    </label>
+                    {selectedLogo && (
+                        <img
+                            src={selectedLogo}
+                            alt="Selected Logo Preview"
+                            className="h-12 w-12 object-cover rounded-md border border-gray-300 shadow-sm"
+                        />
                     )}
                 </div>
             </div>
 
-            <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1">Select Badges</label>
+            <div className="p-1">
+                <label className="text-sm font-semibold text-gray-800">Select Badges</label>
                 <Select
-                    options={logos.map((logo) => ({ value: logo.src, label: logo.label }))}
+                    options={badges.map((badge) => ({ value: badge._id, label: badge.badgeName,icon : badge.badgeIcon }))}
                     isMulti
-                    onChange={handleBadgeChange}
-                    value={selectedBadges.map((badge) => ({ value: badge.value, label: badge.label }))}
-                    isClearable={false}
                     closeMenuOnSelect={false}
                     components={{ Option: CustomOption, MultiValue: CustomMultiValue }}
-                    styles={{
-                        multiValue: (base) => ({
-                            ...base,
-                            backgroundColor: "#e5e7eb",
-                        }),
-                        multiValueLabel: (base) => ({
-                            ...base,
-                            display: "flex",
-                            alignItems: "center",
-                        }),
-                        multiValueRemove: (base) => ({
-                            ...base,
-                            cursor: "pointer",
-                        }),
-                    }}
+                    onChange={handleBadgeChange}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
                 />
-                <p className="text-sm text-gray-500 mt-1">Select up to 2 badges</p>
             </div>
 
-            <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1">SEO Friendly URL</label>
-                <div className="text-gray-500 text-sm mb-1">URL: {`${url && customUrl ? url + customUrl : ""}`}</div>
+            <div className="p-1">
+                <label className="text-sm font-semibold text-gray-800">Custom URL</label>
                 <input
                     type="text"
-                    placeholder="Custom URL"
-                    value={customUrl || ""}
-                    className="w-full h-10 border rounded-md bg-gray-100 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={(e) => changeUrl(e)}
+                    value={customUrl}
+                    placeholder="Enter custom URL"
+                    className="mt-1 w-full border border-gray-300 h-10 bg-gray-100 rounded-md px-4 py-2 text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ease-in-out hover:border-indigo-400"
+                    onChange={changeCustomUrl}
                 />
+            </div>
+
+            <div className="p-1">
+                <label className="text-sm font-semibold text-gray-800">Generated URL</label>
+                 <span className="text-sm font-semibold break-words">{url}</span>
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import LocationDetails from "./bussinessModalParts/LocationDetails";
 import ContactDetails from "./bussinessModalParts/ContactDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { addDetails, removeDetails } from "../../../redux/slice/businessModalSlice";
+import { clearBusinessModal } from "../../../utils/clearReduxStore";
 
 const BusinessModal = ({ open, onClose }) => {
     const modalData = useSelector((state) => state.businessModal.businessData);
@@ -14,8 +15,8 @@ const BusinessModal = ({ open, onClose }) => {
 
     useEffect(() => {
         if (open) {
-            dispatch(removeDetails());
-            dispatch(addDetails({ url: '' }));
+            clearBusinessModal()
+  
             setStep(1);
         }
     }, [open, dispatch]);
@@ -28,14 +29,13 @@ const BusinessModal = ({ open, onClose }) => {
                     modalData.businessCategory &&
                     modalData.businessSubCategory &&
                     modalData.logo &&
-                    modalData.badge1 &&
-                    modalData.badge2
+                    modalData.badge.length >0
                 );
             case 2:
                 return (
                     modalData.latitude &&
                     modalData.longitude &&
-                    modalData.whatsappAvailable &&
+                    modalData.phoneNumber&&
                     modalData.websiteLink
                 );
             case 3:
@@ -62,7 +62,7 @@ const BusinessModal = ({ open, onClose }) => {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ duration: 0.4 }}
-                        className="bg-white p-9 rounded-md shadow-md w-[28%]"
+                        className="bg-white p-9 rounded-md shadow-md w-[40%] lg:w-[29%]"
                     >
                         <div className="w-full flex justify-between items-center">
                             <h2 className="text-2xl font-semibold mb-4">Add New Business</h2>
@@ -78,12 +78,8 @@ const BusinessModal = ({ open, onClose }) => {
                             {step === 1 && <AddBussinessSection />}
                             {step === 2 && <LocationDetails />}
                             {step === 3 && <ContactDetails />}
-                            <div className="w-full flex justify-between mt-4 mb-[5rem]">
-                                {step > 1 && (
-                                    <button className="p-2 bg-gray-300 rounded" onClick={handlePrev}>
-                                        Prev
-                                    </button>
-                                )}
+                            <div className="w-full flex justify-end mt-2 mb-[5rem]">
+                              
                                 {isCurrentStepComplete() && step < 3 && (
                                     <button className="p-2 bg-blue-500 text-white rounded" onClick={handleNext}>
                                         Next

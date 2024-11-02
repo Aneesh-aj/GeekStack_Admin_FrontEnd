@@ -1,6 +1,7 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addDetails } from "../../../../redux/slice/businessModalSlice"
+import { createBusiness } from "../../../../utils/api"
 
 const ContactDetails = () => {
 
@@ -8,8 +9,27 @@ const ContactDetails = () => {
 
     const dispatch = useDispatch()
 
-    function submitDetials(){
+   async function submitDetials(){
+         console.log(" on Clicked",modalData)
+       const formData={
+           businessName : modalData.businessName,
+           businessCategory:modalData.businessCategory,
+           businessSubCategory:modalData.businessSubCategory,
+           logo:modalData.logo,
+           badge: [...modalData.badge] ,
+           url:modalData.url,
+           latitude:modalData.latitude,
+           longitude:modalData.longitude,
+           phoneNumber:modalData.phoneNumber,
+           whatsAppAvailable:modalData.whatsappAvailable,
+           websiteLink:modalData.websiteLink,
+           facebookLink:modalData.facebookLink,
+           instagramLink:modalData.instagramLink,
+           youtubeLink:modalData.youtubeLink,
+           xLink:modalData.xLink
+       }
         
+        const res = await createBusiness(formData)
     }
 
     return (
@@ -52,7 +72,7 @@ const ContactDetails = () => {
             {
                 modalData.facebookLink && modalData.instagramLink && modalData.youtubeLink && modalData.xLink && (
                     <div className="w-full flex justify-center">
-                        <button className="p-2 w-[90%] rounded-lg bg-yellow-500" onClick={()=>submitDetials}>Create Business</button>
+                        <button className="p-2 w-[90%] rounded-lg bg-yellow-500" onClick={(e)=>submitDetials(e)}>Create Business</button>
                     </div>
                 )
             }

@@ -1,12 +1,13 @@
+// businessModalSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export const initialState = {
     businessData: {
         businessName: "",
         businessCategory: "",
         businessSubCategory: "",
         logo: "",
-        badge:[],
+        badge: [],
         url: "",
         latitude: "",
         longitude: "",
@@ -16,7 +17,7 @@ const initialState = {
         facebookLink: "",
         instagramLink: "",
         youtubeLink: "",
-        xLink:""
+        xLink: ""
     },
 };
 
@@ -30,28 +31,11 @@ const businessModalSlice = createSlice({
                 ...action.payload,
             };
         },
-        removeDetails:(state,action)=>{
-            state.businessData={
-                businessName: "",
-                businessCategory: "",
-                businessSubCategory: "",
-                logo: "",
-                badge:[],
-                url: "",
-                location: "",
-                latitude: "",
-                longitude: "",
-                phoneNumber: "",
-                whatsappAvailable: false,
-                websiteLink: "",
-                facebookLink: "",
-                instagramLink: "",
-                youtubeLink: "",
-                xLink:""
-            }
+        removeDetails: (state) => {
+            state.businessData = initialState.businessData;
         }
     },
 });
 
-export const { addDetails,removeDetails} = businessModalSlice.actions;
+export const { addDetails, removeDetails } = businessModalSlice.actions;
 export default businessModalSlice.reducer;

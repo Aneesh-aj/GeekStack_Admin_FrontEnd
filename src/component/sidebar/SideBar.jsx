@@ -2,7 +2,6 @@ import { useState } from "react";
 import React from "react";
 import { menuItems } from "../static/sideBarData";
 import { useNavigate } from "react-router-dom";
-import { submitBusinessData } from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { removeAdmin } from "../../redux/slice/adminSlice";
 import { removeDetails } from "../../redux/slice/businessModalSlice";
@@ -15,8 +14,6 @@ const SideBar = ({ onSelectOption, selectedOption }) => {
     const toggleCategory = (category) => {
         setOpenCategory((prevCategory) => (prevCategory === category ? null : category));
         onSelectOption(category);
-
-        
 
         navigate(`/admin/${category.toLowerCase().replace(/ /g, "-")}`);
     };
@@ -33,7 +30,7 @@ const SideBar = ({ onSelectOption, selectedOption }) => {
                 {/* <button onClick={submitBusinessData}>Click</button> */}
                 {/* <button onClick={refreshing}>redux not working</button> */}
             </h1>
-
+               
             <ul className="space-y-3 text-white">
                 {menuItems.map((item, index) => (
                     <li key={index} className="flex flex-col">
