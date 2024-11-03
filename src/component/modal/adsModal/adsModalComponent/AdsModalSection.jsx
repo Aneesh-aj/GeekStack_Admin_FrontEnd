@@ -20,6 +20,7 @@ const AdsModalSection = () => {
     const [imagePreviews, setImagePreviews] = useState([]);
     const fileInputRef = useRef(null);
     const [errors, setErrors] = useState({});
+    const [loading,setLoading] = useState(false)
 
     const navigate = useNavigate()
 
@@ -70,8 +71,10 @@ const AdsModalSection = () => {
             };
             try {
                 console.log("Form submitted:", formData);
+                setLoading(true)
                 const res = await createAds(formData);
                 console.log("Response:", res);
+                setLoading(false)
                 
                 if (res.ads) {
                     console.log(" mess",res?.message)
@@ -258,7 +261,7 @@ const AdsModalSection = () => {
                 </div>
 
 
-                <button type="submit" className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">Submit</button>
+                <button type="submit" className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md" disabled={loading}>{loading ? "Loading..":"Submit"}</button>
             </div>
             <div className="w-[50%] ps-3">
                 <div className="mt-2 p-2 flex flex-col gap-2 bg-gray-100 rounded-lg shadow-md border min-h-[100%] h-auto">

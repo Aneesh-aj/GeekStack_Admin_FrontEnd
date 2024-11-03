@@ -9,6 +9,7 @@ const CategoryModalSection = () => {
     const [categoryIcon, setCategoryIcon] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [newSubCategory, setNewSubCategory] = useState("");
+    const [loading,setLoading] = useState(false)
     const [errors, setErrors] = useState({});
 
     const handleIconChange = async (e) => {
@@ -61,8 +62,9 @@ const CategoryModalSection = () => {
             };
             console.log("Submitted data:", categoryData);
             try {
-
+                  setLoading(true)
                 const res = await createCategory(categoryData);
+                  setLoading(false)
                     if (res.category) {
                         console.log(" mess", res?.message)
                         toast.success(res.message);
@@ -164,9 +166,10 @@ const CategoryModalSection = () => {
             <div className="p-1">
                 <button
                     type="submit"
+                    disabled={loading}
                     className="w-full h-10 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 transition"
                 >
-                    Create Category
+                   {loading ? "Loading":"Create Category"} Create Category
                 </button>
             </div>
         </form>

@@ -10,7 +10,7 @@ const BadgeModalSection = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [errors, setErrors] = useState({});
-
+    const [loading,setLoading] = useState(false)
     const navigate = useNavigate()
 
     const validate = () => {
@@ -38,7 +38,9 @@ const BadgeModalSection = () => {
             console.log("Form submitted:", formData);
 
             try{
+                setLoading(true)
             const res = await createBadge(formData)
+                setLoading(false)
             if (res.badge) {
                 console.log(" mess",res?.message)
                 toast.success(res.message);
@@ -152,8 +154,9 @@ const BadgeModalSection = () => {
             <button
                 type="submit"
                 className="w-full h-10 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+                disabled={loading}
             >
-                Create Badge
+              {loading ? "Loading..":"Create Badge"}  
             </button>
         </form>
     );
