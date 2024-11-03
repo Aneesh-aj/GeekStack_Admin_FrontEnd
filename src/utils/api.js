@@ -5,7 +5,7 @@ import { uploadImages } from "../firebase/upload";
 export const adminLoginHandler = async (data) => {
     try {
         const res = await adminAxios.post("/auth/login", data)
-        return res
+        return res.data
     } catch (error) {
         return error
     }
