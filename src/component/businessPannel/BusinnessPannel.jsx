@@ -45,8 +45,8 @@ const BusinessPannel = () => {
       };
 
     return (
-        <section className="w-[100%] p-3 h-auto  mt-10 rounded-md">
-            <div className="w-full flex justify-end mb-3">
+        <section className="w-full min-h-[600px] shadow-[0_4px_8px_rgba(0,0,0,0.1),0_-4px_8px_rgba(0,0,0,0.1)] rounded-lg">
+            <div className="w-full flex justify-end p-3">
                 <button className="bg-black rounded-md text-white p-2" onClick={toggleModal}>Add Business</button>
                 <BussinessModal open={openModal} onClose={toggleModal} />
             </div>

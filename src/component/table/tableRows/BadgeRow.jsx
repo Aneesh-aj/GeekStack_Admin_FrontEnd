@@ -98,7 +98,7 @@ const BadgeRow = ({ data, index }) => {
                     <div className="text-left font-medium">{new Date(data?.endDate).toLocaleString()}</div>
                 </td>
                 <td className="p-2 whitespace-nowrap">
-                    <div onClick={handleOpenStatusModal} className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25  dark:bg-dark-blue/80 text-dark-blue dark:text-white">
+                    <div onClick={handleOpenStatusModal} className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25  dark:bg-dark-blue/80 text-dark-blue dark:text-black">
                         View
                     </div>
                 </td>

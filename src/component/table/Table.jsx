@@ -31,7 +31,7 @@ const Table = ({ data, headings }) => {
   ];
   return (
     <table className="table-auto w-full  border-b border-gray-500/25">
-      <thead className="text-sm uppercase text-[#6f6b7d] border-b border-gray-500/25 dark:text-slate-300">
+      <thead className="text-sm uppercase text-gray-500 border-b border-gray-500/25 ">
         <tr>
           {headings?.map((ele, index) => (
             <th key={index} className="p-3">
@@ -47,7 +47,7 @@ const Table = ({ data, headings }) => {
         </tr>
       </thead>
 
-      <tbody className="text-sm divide-y text-[#6f6b7d] Gilroy-Medium divide-gray-500/25 dark:text-slate-300">
+      <tbody className="text-sm divide-y text-gray-400 Gilroy-Medium divide-gray-500/25 ">
     
         {data?.map((ele, index) => (
           <Fragment key={index}>

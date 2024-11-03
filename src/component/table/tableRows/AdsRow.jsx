@@ -52,7 +52,7 @@ const AdsRow = ({ data, index }) => {
                     <div className="text-left font-medium">{data?.stopCampaign ? "Stopped" : "Active"}</div>
                 </td>
                 <td className="p-2 whitespace-nowrap">
-                    <div onClick={handleOpenBannerModal} className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25 dark:bg-dark-blue/80 text-dark-blue dark:text-white">
+                    <div onClick={handleOpenBannerModal} className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25 dark:bg-dark-blue/80 text-dark-blue dark:text-gray-400">
                         View Banners
                     </div>
                 </td>

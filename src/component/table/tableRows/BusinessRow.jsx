@@ -68,7 +68,7 @@ const BusinessRow = ({ data, index }) => {
         <td className="p-2 whitespace-nowrap">
           <div
             onClick={handleOpenModal}
-            className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25 dark:bg-dark-blue/80 text-dark-blue dark:text-white"
+            className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark dark:bg-dark-blue/80 text-dark-blue dark:text-black"
           >
             View
           </div>
