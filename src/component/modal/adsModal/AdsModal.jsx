@@ -7,11 +7,9 @@ import AdsModalSection from "./adsModalComponent/AdsModalSection";
 
 const AdsModal = ({ open, onClose }) => {
    
-
-
     return (
         <AnimatePresence>
-            {!open && (
+            {open && (
                 <div className="fixed inset-0 flex bg-black bg-opacity-50  justify-end ">
                     <motion.div
                         initial={{ x: "100%" }}
@@ -33,6 +31,7 @@ const AdsModal = ({ open, onClose }) => {
                         <div className="w-full h-full bg-white  overflow-y-scroll scrollbar-hide  flex flex-col gap-3 mb-[6rem]">
                             <AdsModalSection/>
                         </div>
+                        
                     </motion.div>
                 </div>
             )}

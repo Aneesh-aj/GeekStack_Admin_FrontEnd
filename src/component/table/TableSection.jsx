@@ -1,20 +1,15 @@
 import React from "react";
 import Table from "./Table";
 
-// import CustomPagination from "../paginations/CustomPagination";
-// import { GoPlus } from "react-icons/go";
-// import TableShimmer from "../shimmers/TableShimmer";
 
 const TableSection = ({ data }) => {
-//   const DrawerComponent = data?.Drawer;
   
  console.log(" hdhhd",data)
 
   return (
     <>
       {data?.loading ? (
-        // <TableShimmer />
-        <div>hhh</div>
+        <div>Loading</div>
       ) : data?.data?.length <= 0 ? (
         <div className="h-[90%] w-full flex justify-center items-center   Gilroy-Medium dark:text-slate-300">
           <div className="space-y-4 flex flex-col items-center">
@@ -23,7 +18,6 @@ const TableSection = ({ data }) => {
               onClick={data?.toggleSidebar}
               className="py-2 px-3 w-max bg-dark-blue text-white rounded-md flex items-center space-x-2"
             >
-              {/* <GoPlus className="w-6 h-6" /> <span>{data?.buttonValue}</span> */}
             </button>
           </div>
         </div>
@@ -75,22 +69,11 @@ const TableSection = ({ data }) => {
             </div>
           </div>
           <div className="p-6 flex ">
-            {/* <CustomPagination
-              page={data?.currentPage}
-              totalPages={data?.totalPages}
-              limit={data?.limit}
-              onPageChange={data?.handlePageChange}
-            /> */}
+           
           </div>
         </div>
       )}
-      {/* <DrawerComponent
-        open={data?.open}
-        refresh={data?.refresh}
-        setRefresh={data?.setRefresh}
-        setOpen={data?.setOpen}
-        toggleSidebar={data?.toggleSidebar}
-      /> */}
+     
     </>
   );
 };

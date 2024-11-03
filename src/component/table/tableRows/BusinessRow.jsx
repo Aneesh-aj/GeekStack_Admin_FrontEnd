@@ -1,177 +1,118 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
+const BusinessRow = ({ data, index }) => {
+  const { admin } = useSelector((state) => state.adminData.admin);
+  const [dropdown, setDropdown] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [openStatusModal, setOpenStatusModal] = useState(false);
 
-const BusinessRow=({data})=>{
-    const { admin } = useSelector((state) => state.adminData.admin);
-    const [dropdown, setDropdown] = useState(false);
-    const [openDrawer, setOpenDrewer] = useState(false);
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [openStatusModal, setOpenStatusModal] = useState(false);
-    const handleOpenModal = () => {
-      setModalOpen(true);
-    };
-  
-    const handleCloseModal = () => {
-      setModalOpen(false);
-    };
-    const handleOpenStatusModal = () => {
-      setOpenStatusModal(true);
-    };
-  
-    const handleClosStatuseModal = () => {
-      setOpenStatusModal(false);
-    };
-    const ref = useRef();
-    // useClickAway(ref, () =>{
-    //   setOpenDrewer(false)
-    //   setDropdown(false)
-    // } );
-    const toggleSidebar = () => setOpenDrewer((prev) => !prev);
-    const colors = ["#00cfe8", "#ff9f43", "#ea5455", "#28c76f"];
-    const getRandomColor = () => {
-      const randomIndex = Math.floor(Math.random() * colors.length);
-      const color = colors[randomIndex];
-  
-      const hexToRgb = (hex) =>
-        hex
-          .replace(
-            /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
-            (m, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
-          )
-          .substring(1)
-          .match(/.{2}/g)
-          .map((x) => parseInt(x, 16));
-  
-      const [r, g, b] = hexToRgb(color);
-  
-      const opacity = 0.2;
-  
-      const textColor = color;
-  
-      return {
-        backgroundColor: `rgba(${r}, ${g}, ${b}, ${opacity})`,
-        color: textColor,
-      };
-    };
-  
-    const { backgroundColor, color } = getRandomColor();
-  
-    const handleDelete = (id) => {
-      console.log(id);
-      DeleteConfirmationModal(
-        deleteLeadHandler,
-        id,
-        admin?.token,
-        refresh,
-        setRefresh
-      );
-    };
-  
-    return (
-      <>
-        <tr className="ease-in-out delay-150 duration-75">
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
+  const colors = ["#00cfe8", "#ff9f43", "#ea5455", "#28c76f"];
+  const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+
+  return (
+    <>
+      <tr className="ease-in-out delay-150 duration-75">
         <td className="p-2 whitespace-nowrap">
-            <div className="text-center font-medium">{1}</div>
-          </td>
-          <td className="p-4 whitespace-nowrap">
-            <div className="flex items-center">
-              <div className="font-medium flex items-center space-x-1">
-                <div
-                  style={{
-                    backgroundColor: backgroundColor,
-                    color: color,
-                  }}
-                  className="flex justify-center w-8 h-8 rounded-full   items-center text-lg"
-                >
-                  {data?.name[0]}
-                </div>
-                <span>{data?.name}</span>
+          <div className="text-center font-medium">{index + 1}</div>
+        </td>
+        <td className="p-4 whitespace-nowrap">
+          <div className="flex items-center">
+            <div className="font-medium flex items-center space-x-1">
+              <div
+                style={{
+                  backgroundColor: getRandomColor(),
+                  color: "#ffffff",
+                }}
+                className="flex justify-center w-8 h-8 rounded-full items-center text-lg"
+              >
+                {data.businessName[0]}
               </div>
+              <span>{data.businessName}</span>
             </div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">{data?.number}</div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">{data?.email}</div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">
-              {/* {dateFormater(data?.createdAt)} */}
-            </div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">{data?.course}</div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">{data?.workingStatus}</div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">{data?.leadFrom || "-"} </div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">{data?.demoClass || "-"} </div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div className="text-left font-medium">{data?.leadScore || "-"} </div>
-          </td>
-          <td className="p-2 whitespace-nowrap">
-            <div onClick={handleOpenStatusModal} className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25  dark:bg-dark-blue/80 text-dark-blue dark:text-white">
-              {/* {data?.status} */}
-              view
-            </div>
-          </td>
-  
-          <td className="p-2 whitespace-nowrap">
-            <div className=" hover:text-slate-800 font-medium text-center flex justify-center items-center space-x-5 ">
-              {/* <AiOutlineDelete
-                onClick={() => handleDelete(data?._id)}
-                className="text-black w-6 h-6 dark:text-white cursor-pointer"
-              /> */}
-              <div className="">
-                {/* <IoMdMore
-                  onClick={() => {
-                    setDropdown(!dropdown);
-                    setOpenDropdownIndex(openDropdownIndex === index ? null : index);
-                  }}
-                  className="text-black w-6 h-6 dark:text-white cursor-pointer"
-                /> */}
-                {dropdown &&openDropdownIndex === index && (
-                 <div
-                 className={`absolute right-0 z-10 origin-top-right bg-white rounded-md text-gray-600 shadow-lg focus:outline-none border dark:text-slate-300 dark:bg-gray-800 dark:border-slate-300/20`}
-               >
-                    <div
-                      // onClick={() => handleDelete(department._id)}
-                      className="py-1"
-                    >
-                      <span
-                        onClick={handleOpenModal}
-                        className="block px-4 py-2  cursor-pointer  hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-slate-300"
-                      >
-                        Update Status
-                      </span>
-                    </div>
-                    <div
-                      // onClick={handleOpenModal}
-                      className="py-1 border-t dark:border-slate-500/25"
-                    >
-                      <span
-                        onClick={toggleSidebar}
-                        className="block px-4 py-2 cursor-pointer   hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-slate-300"
-                      >
-                        Edit
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </td>
-        </tr>
-      
-      </>
-    );
-}
+          </div>
+        </td>
+        <td className="p-2 whitespace-nowrap">
+          <div className="text-left font-medium">{data.phoneNumber}</div>
+        </td>
+        <td className="p-2 whitespace-nowrap">
+          <div className="flex items-center space-x-2">
+            {data.badge.map((badge, index) => (
+              <img
+                key={index}
+                src={badge.badgeIcon}
+                alt={`Badge ${index + 1}`}
+                className="w-6 h-6"
+              />
+            ))}
+          </div>
+        </td>
+        <td className="p-2 whitespace-nowrap">
+          <div className="text-left font-medium">{data?.businessCategory?.categoryName}</div>
+        </td>
+        <td className="p-2 whitespace-nowrap">
+          <div className="text-left font-medium">
+            {new Date(data.createdAt).toLocaleDateString()}
+          </div>
+        </td>
+        <td className="p-2 whitespace-nowrap">
+          <div className="text-left font-medium">{data.businessSubCategory}</div>
+        </td>
+        <td className="p-2 whitespace-nowrap">
+          <div className="text-left font-medium">{data.whatsAppAvailable ? "Yes" : "No"}</div>
+        </td>
+       
+        <td className="p-2 whitespace-nowrap">
+          <div
+            onClick={handleOpenModal}
+            className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25 dark:bg-dark-blue/80 text-dark-blue dark:text-white"
+          >
+            View
+          </div>
+        </td>
+        <td className="p-2 whitespace-nowrap">
+          <div
+            className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25 dark:bg-dark-blue/80 text-dark-blue dark:text-white"
+          >
+            --
+          </div>
+        </td>
+      </tr>
 
-export default BusinessRow
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg w-11/12 md:w-1/2 lg:w-1/3 p-6 relative">
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-3 right-3 text-gray-600 dark:text-gray-300 text-lg"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-semibold mb-4">Business Details</h2>
+            <div className="space-y-2">
+              <p><strong>latitude :</strong> {data.latitude}</p>
+              <p><strong>longitude :</strong> {data.longitude}</p>
+              <p><strong>websiteLink:</strong> {data.websiteLink}</p>
+              <p><strong>facebookLink:</strong> {data.facebookLink}</p>
+              <p><strong>instagramLink:</strong> {data.instagramLink}</p>
+              <p><strong>youtubeLink:</strong> {data.youtubeLink}</p>
+              <p><strong>xLink:</strong> <a href={data.xLink} target="_blank" rel="noopener noreferrer">{data.xLink}</a></p>
+              <p><strong>URL:</strong> <a href={data.url} target="_blank" rel="noopener noreferrer">{data.url}</a></p>
+            </div>
+            <button
+              onClick={handleCloseModal}
+              className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default BusinessRow;

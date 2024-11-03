@@ -39,7 +39,7 @@ const CategoryModalSection = () => {
             setErrors({ ...errors, subCategories: "Sub-category name cannot be empty." });
         }
     };
-    
+
     const removeSubCategory = (index) => {
         setSubCategories(subCategories.filter((_, i) => i !== index));
     };
@@ -60,9 +60,31 @@ const CategoryModalSection = () => {
                 subCategory: subCategories,
             };
             console.log("Submitted data:", categoryData);
+            try {
 
-            const res = await createCategory(categoryData);
-            // Optionally handle the response here
+                const res = await createCategory(categoryData);
+                    if (res.category) {
+                        console.log(" mess", res?.message)
+                        toast.success(res.message);
+                        navigate("/admin/categories")
+                    } else if (res.status == 409) {
+                        console.log("Conflict error:", res.response.data.message);
+                        toast.error(res.response.data.message);
+                    } else if (res.status === 400) {
+                        console.log("Conflict error:", res.response.data.message);
+                        toast.error(res.response.data.message);
+                    } else {
+                        toast.error("Unexpected error occurred.");
+                    }
+                } catch (error) {
+                    console.error("Error occurred:", error);
+                    if (error.response) {
+                        toast.error(error.response.data.message || "Error occurred during the request.");
+                    } else {
+                        toast.error("Error occurred: " + error.message);
+                    }
+                }
+
         }
     };
 

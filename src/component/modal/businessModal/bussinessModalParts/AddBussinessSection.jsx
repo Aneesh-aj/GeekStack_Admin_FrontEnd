@@ -11,6 +11,7 @@ const AddBusinessSection = () => {
     const modalData = useSelector((state) => state.businessModal.businessData);
     const [businessName, setBusinessName] = useState("");
     const [businessCategory, setBusinessCategory] = useState("");
+    const [loading,setLoading]=useState(false)
     const [businessSubCategory, setBusinessSubCategory] = useState("");
     const [customUrl, setCustomUrl] = useState("");
     const [categories, setCategories] = useState([]);
@@ -74,9 +75,11 @@ const AddBusinessSection = () => {
             const file = e.target.files[0];
              
             if(file){
+                setLoading(true)
                const image = await uploadImages(file)
                setSelectedLogo(image)
                dispatch(addDetails({logo:image}))
+               setLoading(false)
             }
 
         }
@@ -149,9 +152,10 @@ const AddBusinessSection = () => {
                             type="file"
                             accept="image/png, image/jpeg"
                             onChange={handleLogoChange}
+                            disabled={loading}
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         />
-                        Upload Logo
+                      {loading ? "Uploading...":"Upload Log"}  
                     </label>
                     {selectedLogo && (
                         <img

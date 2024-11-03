@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-const CategoryRow = ({ data, index }) => {
+const BadgeRow = ({ data, index }) => {
     const { admin } = useSelector((state) => state.adminData.admin);
     const [dropdown, setDropdown] = useState(false);
     const [openDrawer, setOpenDrewer] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
     const [openStatusModal, setOpenStatusModal] = useState(false);
-    
+
     const handleOpenModal = () => {
         setModalOpen(true);
     };
@@ -29,9 +29,10 @@ const CategoryRow = ({ data, index }) => {
     //     setOpenDrewer(false);
     //     setDropdown(false);
     // });
-    
+
     const toggleSidebar = () => setOpenDrewer((prev) => !prev);
     const colors = ["#00cfe8", "#ff9f43", "#ea5455", "#28c76f"];
+
     const getRandomColor = () => {
         const randomIndex = Math.floor(Math.random() * colors.length);
         const color = colors[randomIndex];
@@ -68,7 +69,7 @@ const CategoryRow = ({ data, index }) => {
                 <td className="p-2 whitespace-nowrap">
                     <div className="text-center font-medium">{index + 1}</div>
                 </td>
-                                <td className="p-4 whitespace-nowrap">
+                <td className="p-4 whitespace-nowrap">
                     <div className="flex items-center">
                         <div
                             style={{
@@ -77,28 +78,25 @@ const CategoryRow = ({ data, index }) => {
                             }}
                             className="flex justify-center w-8 h-8 rounded-full items-center text-lg"
                         >
-                            {data?.categoryName[0]}
+                            {data?.badgeName[0]}
                         </div>
-                        <span className="ml-2">{data?.categoryName}</span>
+                        <span className="ml-2">{data?.badgeName}</span>
                     </div>
                 </td>
-                                <td className="p-2 whitespace-nowrap">
+                <td className="p-2 whitespace-nowrap">
                     <img
-                        src={data.categoryIcon}
-                        alt={`${data.categoryName} icon`}
+                        src={data.badgeIcon}
+                        alt={`${data.badgeName} icon`}
                         className="w-8 h-8 rounded-full"
                     />
-                </td>                
+                </td>
                 <td className="p-2 whitespace-nowrap">
-                    <div className="text-left font-medium">{data?.subCategory.join(", ")}</div>
+                    <div className="text-left font-medium">{new Date(data?.startDate).toLocaleString()}</div>
                 </td>
-                                <td className="p-2 whitespace-nowrap">
-                    <div className="text-left font-medium">{new Date(data?.createdAt).toLocaleString()}</div>
+
+                <td className="p-2 whitespace-nowrap">
+                    <div className="text-left font-medium">{new Date(data?.endDate).toLocaleString()}</div>
                 </td>
-                                <td className="p-2 whitespace-nowrap">
-                    <div className="text-left font-medium">{data?.deleted ? "Yes" : "No"}</div>
-                </td>
-                
                 <td className="p-2 whitespace-nowrap">
                     <div onClick={handleOpenStatusModal} className="text-left cursor-pointer font-medium px-3 py-1 w-max rounded-md bg-dark-blue/25  dark:bg-dark-blue/80 text-dark-blue dark:text-white">
                         View
@@ -109,4 +107,4 @@ const CategoryRow = ({ data, index }) => {
     );
 };
 
-export default CategoryRow;
+export default BadgeRow;

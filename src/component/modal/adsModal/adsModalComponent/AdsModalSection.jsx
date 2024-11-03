@@ -5,6 +5,7 @@ import { Switch } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { createAds, getAllBusiness } from "../../../../utils/api";
 import toast, {  Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AdsModalSection = () => {
     const [allBusiness, setAllBusiness] = useState([]);
@@ -19,6 +20,8 @@ const AdsModalSection = () => {
     const [imagePreviews, setImagePreviews] = useState([]);
     const fileInputRef = useRef(null);
     const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchData();
@@ -65,24 +68,33 @@ const AdsModalSection = () => {
                 isUntilTurnOff,
                 images
             };
-            console.log("Form submitted:", formData);
-            const res = await createAds(formData)
-            console.log(" res ",res)
-            console.log(" res data ",res.data)
-            console.log(" resone ",res.response)
-            console.log(" res stuaaaaaaa",res.status)
-            if(res.status == 200){
-                toast.success(res.data.message)
-            }else if(res.status ==409){
-                console.log(" insdie this kkk",res.response.data.message)
-
-                toast.error(res.response.data.message)
-                alert(res.data.message)
-            }else if(res.status === 400){
-                toast.error(res.response.data.message)
-            }else{
-                toast.error(res.response.data.message)
+            try {
+                console.log("Form submitted:", formData);
+                const res = await createAds(formData);
+                console.log("Response:", res);
+                
+                if (res.ads) {
+                    console.log(" mess",res?.message)
+                    toast.success(res.message);
+                    navigate("/admin/ads-manager")
+                } else if (res.status == 409) {
+                    console.log("Conflict error:", res.response.data.message);
+                    toast.error(res.response.data.message);
+                } else if (res.status === 400) {
+                    console.log("Conflict error:", res.response.data.message);
+                    toast.error(res.response.data.message);
+                } else {
+                    toast.error("Unexpected error occurred.");
+                }
+            } catch (error) {
+                console.error("Error occurred:", error);
+                if (error.response) {
+                    toast.error(error.response.data.message || "Error occurred during the request.");
+                } else {
+                    toast.error("Error occurred: " + error.message);
+                }
             }
+            
         } else {
             console.log("Validation failed");
         }
@@ -132,7 +144,7 @@ const AdsModalSection = () => {
 
     return (
         <form onSubmit={handleSubmit} className="w-full p-4 bg-gray-50 rounded-lg shadow-lg space-y-6 flex mb-16">
-                <Toaster />
+                           <Toaster position="top-center" reverseOrder={false} />
             <div className="space-y-6 w-[50%]">
                 <div>
                     <label className="text-sm font-semibold text-gray-800">Ad Logos</label>

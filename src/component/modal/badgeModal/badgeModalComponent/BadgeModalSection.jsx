@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { uploadImages } from "../../../../firebase/upload";
 import { createBadge } from "../../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const BadgeModalSection = () => {
     const [categoryIcon, setCategoryIcon] = useState(null);
@@ -9,6 +10,8 @@ const BadgeModalSection = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate()
 
     const validate = () => {
         const newErrors = {};
@@ -33,7 +36,30 @@ const BadgeModalSection = () => {
                 categoryIcon
             };
             console.log("Form submitted:", formData);
+
+            try{
             const res = await createBadge(formData)
+            if (res.badge) {
+                console.log(" mess",res?.message)
+                toast.success(res.message);
+                navigate("/admin/badge-manager")
+            } else if (res.status == 409) {
+                console.log("Conflict error:", res.response.data.message);
+                toast.error(res.response.data.message);
+            } else if (res.status === 400) {
+                console.log("Conflict error:", res.response.data.message);
+                toast.error(res.response.data.message);
+            } else {
+                toast.error("Unexpected error occurred.");
+            }
+        } catch (error) {
+            console.error("Error occurred:", error);
+            if (error.response) {
+                toast.error(error.response.data.message || "Error occurred during the request.");
+            } else {
+                toast.error("Error occurred: " + error.message);
+            }
+        }
         } else {
             console.log("Validation failed");
         }
